@@ -11,6 +11,7 @@
 		"@react-three/drei": "^9.70.0",
 		"@react-three/fiber": "^8.13.0",
 		"@react-three/postprocessing": "^2.14.6",
+		"@studio-freight/lenis": "^1.0.25",
 		"alea": "^1.0.1",
 		"framer-motion": "^10.12.16",
 		"gsap": "^3.11.5",
