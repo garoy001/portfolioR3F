@@ -1,0 +1,62 @@
+@import url('/Styling/themes.scss');
+@import url('/Styling/intro-section.scss');
+@import url('/Styling/project-section.scss');
+@import url('/Styling/breakpoints.scss');
+@import url('/Styling/nav.scss');
+@import url('/Styling/about.scss');
+
+html,
+body {
+	margin: 0;
+	height: auto;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	overflow-x: hidden;
+}
+
+.page-section {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+}
+
+.html-tester {
+	left: 0;
+	// top: 25em;
+	right: 0;
+	bottom: 0;
+	width: 200px;
+	height: 200px;
+	// transform: translate(-50%, -50%) !important;
+	font-size: 10em;
+	div {
+		height: 100%;
+		.test-value {
+			height: 40px !important;
+		}
+	}
+}
+.html-test-wrapper {
+}
+canvas {
+	// touch-action: none;
+}
+// html.lenis {
+// 	height: auto;
+// }
+
+// .lenis.lenis-smooth {
+// 	scroll-behavior: auto;
+// }
+
+// .lenis.lenis-smooth [data-lenis-prevent] {
+// 	overscroll-behavior: contain;
+// }
+
+// .lenis.lenis-stopped {
+// 	overflow: hidden;
+// }
+
+// .lenis.lenis-scrolling iframe {
+// 	pointer-events: none;
+// }

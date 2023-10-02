@@ -1,0 +1,72 @@
+//Breakpoints
+
+//Mobile
+@media screen and (width < 768px) {
+	:root {
+		font-size: 5px;
+	}
+	.intro-section-wrapper {
+		.intro-hook-header {
+			padding-left: 0em;
+		}
+		#intro-about-section {
+			padding-left: 0em;
+		}
+	}
+	.canvas-mirror-html-wrapper {
+		// .html-content {
+		// 	width: 280px !important;
+		// 	height: 485px !important;
+		// }
+		top: -5px !important;
+	}
+	.project-hover {
+		width: 100vw;
+		left: -25%;
+	}
+	.about-frame {
+		flex-direction: column;
+	}
+	.title-wrapper {
+		border-left: none !important;
+		border-bottom: orange 2px solid;
+		padding-left: 0 !important;
+		margin-left: 5%;
+	}
+	.text-container {
+		transform: translateY(15%);
+		width: 200%;
+		padding-left: 5%;
+		padding-right: 5%;
+	}
+}
+//Tablet
+@media screen and (width >= 768px) and (width < 1024px) {
+	:root {
+		font-size: 9px;
+	}
+	.canvas-mirror-html {
+		.html-content {
+		}
+	}
+}
+//Laptop
+@media screen and (width >= 1024px) and (width < 1440px) {
+	:root {
+		font-size: 14px;
+	}
+	.canvas-mirror-html {
+		.html-content {
+		}
+	}
+}
+//Larger
+@media screen and (width >= 1440px) {
+	:root {
+		font-size: 16px;
+	}
+	.canvas-mirror-html {
+		.html-content {
+		}
+	}
+}

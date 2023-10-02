@@ -1,0 +1,12 @@
+:root {
+	--main-font-family: 'Montserrat', sans-serif;
+	--tablet-breakpoint: 768px;
+	--laptop-breakpoint: 1024px;
+	--desktop-breakpoint: 1440px;
+	--light-mode-bg: white;
+	--dark-mode-bg: rgba(0, 0, 0, 0.8);
+	--light-mode-text: black;
+	--dark-mode-text: white;
+	--background-color: var(--dark-mode-bg);
+	--text-color: var(--dark-mode-text);
+}
