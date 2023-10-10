@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { BiRightArrow, BiLeftArrow } from 'react-icons/bi';
 import { LiaHandPointerSolid } from 'react-icons/lia';
 import {
@@ -14,36 +14,71 @@ import { easing } from 'maath';
 import { gsap } from 'gsap';
 import { getBreakPoint, getDeviceType } from '/utils';
 import { Frame } from './Frame';
-const images = ProjectData;
+let Checker = 0;
 let counter = 0;
+let stateObj;
+let camera;
+let currentIntersect;
+let prevIntersect;
 export const Frames = ({
 	q = new THREE.Quaternion(),
 	p = new THREE.Vector3(),
 }) => {
+	const images = useMemo(() => {
+		return ProjectData;
+	});
 	const timeline = gsap.timeline({ repeat: -1 });
 	let arrowWrapper = null;
 	const breakPoint = getBreakPoint();
 	const deviceType = getDeviceType();
 	const [isClicked, setClicked] = useState(false);
+	const [locked, setLocked] = useState(false);
 	const rotatingRef = useRef();
 	const textRef3d = useRef();
 	const groupRef = useRef();
 	const ref = useRef();
 	const htmlRef = useRef();
-
+	// const [prevIntersect, setPrevIntersect] = useState();
+	// const [currentIntersect, setCurrentIntersect] = useState();
+	const tlLeft = gsap.timeline({
+		onStart: () => {
+			setLocked(true);
+		},
+		onComplete: () => {
+			setLocked(false);
+			checkIntersects(stateObj.camera, stateObj.scene);
+		},
+	});
+	const tlRight = gsap.timeline({
+		onStart: () => {
+			setLocked(true);
+		},
+		onComplete: () => {
+			setLocked(false);
+			checkIntersects(stateObj.camera, stateObj.scene);
+		},
+	});
+	tlLeft.pause();
+	tlRight.pause();
 	const rotateLeft = () => {
-		counter += 1;
-		gsap.to(rotatingRef.current.rotation, {
-			y: (Math.PI / images.length) * 2 * counter,
-			duration: 1,
-		});
+		if (!locked) {
+			counter += 1;
+			tlLeft.play();
+			tlLeft.to(rotatingRef.current.rotation, {
+				y: (Math.PI / images.length) * 2 * counter,
+				duration: 1,
+			});
+		}
 	};
 	const rotateRight = () => {
-		counter -= 1;
-		gsap.to(rotatingRef.current.rotation, {
-			y: (Math.PI / images.length) * 2 * counter,
-			duration: 1,
-		});
+		if (!locked) {
+			counter -= 1;
+			tlRight.play();
+			tlRight.to(rotatingRef.current.rotation, {
+				y: (Math.PI / images.length) * 2 * counter,
+				duration: 1,
+			});
+		}
 	};
 
 	q.identity();
@@ -59,7 +94,41 @@ export const Frames = ({
 	const floorGeometry = useMemo(() => {
 		return new THREE.PlaneGeometry(50.5, 50.5);
 	}, []);
-	// console.log(renderedImages);
+	const rayCaster = new THREE.Raycaster();
+	const checkIntersects = (camera, scene) => {
+		rayCaster.set(new THREE.Vector3(0, 0, 0), camera.position);
+		const intersects = rayCaster.intersectObject(scene);
+		if (intersects[0].object != undefined) {
+			const interObj = intersects[0].object.children[2];
+			console.log(interObj);
+			prevIntersect = currentIntersect;
+			currentIntersect = interObj.name;
+			console.log('prev');
+			console.log(prevIntersect);
+			console.log('current');
+			console.log(currentIntersect);
+			// console.log(intersects[0].object.children[2]);
+			const htmlSelector = `${currentIntersect}`;
+			const prevHtmlSelector = `${prevIntersect}`;
+			let htmlItem = document.getElementsByClassName(htmlSelector);
+			let prevHtmlItem = document.getElementsByClassName(prevHtmlSelector);
+			htmlItem = htmlItem[0];
+			gsap.fromTo(
+				prevHtmlItem,
+				{ opacity: 1 },
+				{ opacity: 0, duration: 0.25, ease: 'power4' }
+			);
+			gsap.fromTo(
+				htmlItem,
+				{ opacity: 0 },
+				{ opacity: 1, duration: 0.5, ease: 'power4' }
+			);
+			// console.log(htmlItem.style);
+
+			// console.log(intersects);
+			// console.log(intersects[0].object.children[2]);
+		}
+	};
 	useEffect(() => {
 		if (deviceType != 'desktop') {
 			textRef3d.current.scale.set(0.8, 0.8, 0.8);
@@ -67,10 +136,7 @@ export const Frames = ({
 		}
 
 		p.set(0, 1.2, 6.25);
-	});
-
-	useFrame((state, dt) => {
-		if (document.querySelector('.pointer-hand') && !isClicked) {
+		if (htmlRef.current) {
 			const hand = htmlRef.current;
 
 			timeline.to(hand, { scale: '.8', duration: 0.5, delay: 3 });
@@ -78,11 +144,23 @@ export const Frames = ({
 
 			timeline.play();
 		}
+	});
 
+	useFrame((state, dt) => {
 		arrowWrapper = document.querySelector('.arrow-wrap');
+		// console.log(rayCaster);
+		stateObj = state;
+		// console.log(renderedImages.props.children);
 		if (isClicked) {
 			easing.damp3(state.camera.position, p, 0.4, dt);
 			easing.dampQ(state.camera.quaternion, q, 0.4, dt);
+
+			if (state.camera.position.y == 1.2 && Checker === 0) {
+				checkIntersects(state.camera, state.scene);
+				Checker++;
+			}
+			// console.log(intersects);
+			// console.log(rayCaster.intersectObjects(renderedImages.props.children));
 			gsap.to(textRef3d.current.position, {
 				y: -1,
 				duration: 10,
@@ -97,23 +175,22 @@ export const Frames = ({
 		}
 	});
 	return (
-		<group ref={ref} position={[0, -1, 0]}>
-			{deviceType == 'desktop' && isClicked && (
-				<PresentationControls global polar={[0, 0, 0]} speed={0.75}>
-					<group ref={groupRef}>{renderedImages}</group>
-				</PresentationControls>
-			)}
+		<group ref={ref} position={[0, -1, 0]} name="frames-grp">
 			{deviceType == 'desktop' && !isClicked && (
 				<>
-					<group ref={groupRef}>{renderedImages}</group>
+					<group ref={groupRef} name="rendered-images">
+						{renderedImages}
+					</group>
 				</>
 			)}
 			{deviceType != 'desktop' && !isClicked && (
 				<>
-					<group ref={groupRef}>{renderedImages}</group>
+					<group ref={groupRef} name="rendered-images">
+						{renderedImages}
+					</group>
 				</>
 			)}
-			{deviceType != 'desktop' && isClicked && (
+			{isClicked && (
 				<>
 					<Html wrapperClass="canvas-arrows-wrapper" className="canvas-arrows">
 						<div className="arrow-wrap">
@@ -126,8 +203,10 @@ export const Frames = ({
 						</div>
 					</Html>
 					<>
-						<group ref={rotatingRef}>
-							<group ref={groupRef}>{renderedImages}</group>
+						<group ref={rotatingRef} name="rotating-ref-container">
+							<group ref={groupRef} name="rendered-images">
+								{renderedImages}
+							</group>
 						</group>
 					</>
 				</>

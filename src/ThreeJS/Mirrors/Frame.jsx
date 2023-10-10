@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { TfiArrowCircleUp } from 'react-icons/tfi';
 import { Image, Text, Html } from '@react-three/drei';
 import { gsap } from 'gsap';
@@ -15,14 +15,21 @@ export const Frame = ({
 	c = new THREE.Color(),
 	angle,
 	radius,
+	id,
 	...props
 }) => {
-	// const breakPoint = getBreakPoint();
+	const rayCaster = new THREE.Raycaster();
+	const testMat = new THREE.MeshPhysicalMaterial({
+		side: THREE.BackSide,
+		opacity: 1,
+	});
+	const breakPoint = getBreakPoint();
 	const deviceType = getDeviceType();
 	const image = useRef();
 	const frame = useRef();
 	const textRef = useRef();
 	const htmlRef = useRef();
+	const testRef = useRef();
 	const [toggle, setToggle] = useState(false);
 	const groupRef = useRef();
 	const frameBox = useMemo(() => {
@@ -31,28 +38,21 @@ export const Frame = ({
 			color: '#151515',
 			metalness: 0.5,
 			roughness: 0.5,
-			envMapIntensity: 2,
+			// envMapIntensity: 2,
 		});
 		return { geometry, material };
 	}, []);
 	const frameBox2 = useMemo(() => {
 		const geometry = new THREE.BoxGeometry(1.1, 1.9, 0.051);
 		const material = new THREE.MeshBasicMaterial({
-			toneMapped: false,
-			fog: false,
+	
 		});
 		return { geometry, material };
 	}, []);
-	// const textMaterial = useMemo(() => {
-	// 	const material = new THREE.MeshStandardMaterial({
-	// 		color: '#fff',
-	// 		emissive: '#fff',
-	// 		emissiveIntensity: 2,
-	// 		toneMapped: false,
-	// 	});
-	// 	return material;
-	// });
+
 	const [rnd] = useState(() => Math.random());
+	const { gl, camera } = useThree();
+	rayCaster.setFromCamera(new THREE.Vector3(0, 0, 0), camera);
 
 	const onArrowClick = (e) => {
 		const arrow1 = e.target.childNodes[0];
@@ -90,6 +90,8 @@ export const Frame = ({
 	useFrame((state, dt) => {
 		image.current.material.zoom =
 			2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
+		gl.autoClear = false;
+		gl.clearDepth();
 	});
 	useEffect(() => {
 		const vecPos = new THREE.Vector3(
@@ -100,10 +102,13 @@ export const Frame = ({
 		groupRef.current.children.forEach((e) => {
 			e.lookAt(vecPos);
 		});
+		// console.log(testRef);
+		const name = `${id}html-selector-drei`;
+		htmlRef.current.name = name;
 	}, []);
 	return (
 		<>
-			<group {...props} ref={groupRef}>
+			<group {...props} ref={groupRef} name="frame-grp">
 				<mesh
 					name={name}
 					// scale={[1, GOLDENRATIO, 0.05]}
@@ -113,28 +118,30 @@ export const Frame = ({
 				>
 					<mesh
 						ref={frame}
-						raycast={() => null}
 						// scale={[0.9, 0.93, 0.9]}
 						position={[0, 0, 0.001]}
 						geometry={frameBox2.geometry}
 						material={frameBox2.material}
 					></mesh>
 					<Image
-						raycast={() => null}
 						ref={image}
 						position={[0, 0, 0.055]}
 						scale={[1.05, 1.85, 1]}
 						url={img}
 					/>
-					<group ref={htmlRef}>
+					<group ref={htmlRef} className="test">
 						<Html
-							className="canvas-mirror-html"
+							className={`canvas-mirror-html ${id + 'html-selector-drei'}`}
 							wrapperClass="canvas-mirror-html-wrapper"
 							transform
 							center
-							occlude
+							// material={testMat}
+							// prepend
+							// occlude="blend"
+							ref={testRef}
 							distanceFactor={1}
 							position={[0, -0.017, 0.056]}
+
 							// rotation={[Math.PI / 10.75, 0, 0]}
 							// scale={1}
 						>

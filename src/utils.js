@@ -34,3 +34,20 @@ export const getBreakPoint = () => {
 	return breakPoint;
 };
 //412 x 753 // 2.625
+
+export const checkIntersects = (camera, scene) => {
+	rayCaster.set(new THREE.Vector3(0, 0, 0), camera.position);
+	const intersects = rayCaster.intersectObject(scene);
+	if (intersects[0].object != undefined) {
+		setPrevIntersect(currentIntersect);
+		setCurrentIntersect(intersects[0].object.children[2]);
+		// console.log('prev');
+		// console.log(prevIntersect);
+		// console.log('current');
+		// console.log(currentIntersect);
+		console.log(intersects[0].object.children[2].children[0].className);
+
+		// console.log(intersects);
+		// console.log(intersects[0].object.children[2]);
+	}
+};

@@ -27,7 +27,13 @@
 // const axiosIco = 'https://www.vectorlogo.zone/logos/axios/axios-icon.svg';
 // const jqueryIco =
 // 	'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original-wordmark.svg';
-
+const projectLength = 6;
+const angle = (Math.PI / projectLength) * 2;
+// console.log(projData.length);
+const radius = 3;
+const pos = 1;
+const offset = 0;
+// console.log(angle);
 const projData = [
 	{
 		name: 'Weather Api App',
@@ -45,8 +51,10 @@ const projData = [
 			short: 'Weather API serving weekly, daily, hourly weather updates',
 			long: '',
 		},
-		position: [1.75, 0, 1.5],
-		rotation: [0, Math.PI / 2.5, 0],
+		angle: 0 * angle,
+		radius: radius,
+		position: [Math.sin(0 * angle) * radius, pos, Math.cos(0 * angle) * radius],
+		id: '000001',
 	},
 	{
 		name: 'Cheese Api App',
@@ -83,6 +91,10 @@ const projData = [
 			short: 'An app to store your favorite cheeses',
 			long: '',
 		},
+		angle: 1 * angle,
+		radius: radius,
+		position: [Math.sin(1 * angle) * radius, pos, Math.cos(1 * angle) * radius],
+		id: '000002',
 	},
 	{
 		name: 'Stocks Api App',
@@ -100,6 +112,10 @@ const projData = [
 			short: 'A stock tracking app',
 			long: '',
 		},
+		angle: 2 * angle,
+		radius: radius,
+		position: [Math.sin(2 * angle) * radius, pos, Math.cos(2 * angle) * radius],
+		id: '000003',
 	},
 	{
 		name: 'Food Api App',
@@ -125,6 +141,10 @@ const projData = [
 			short: 'An api that returns food information and stores searches',
 			long: '',
 		},
+		angle: 3 * angle,
+		radius: radius,
+		position: [Math.sin(3 * angle) * radius, pos, Math.cos(3 * angle) * radius],
+		id: '000004',
 	},
 	// {
 	// 	name: 'Magic 8 Ball',
@@ -159,6 +179,10 @@ const projData = [
 			short: 'An editable menu for a Tavern',
 			long: '',
 		},
+		angle: 4 * angle,
+		radius: radius,
+		position: [Math.sin(4 * angle) * radius, pos, Math.cos(4 * angle) * radius],
+		id: '000005',
 	},
 	{
 		name: 'CETAMD',
@@ -191,25 +215,13 @@ const projData = [
 			short: 'Event Planning App',
 			long: '',
 		},
+		angle: 5 * angle,
+		radius: radius,
+		position: [Math.sin(5 * angle) * radius, pos, Math.cos(5 * angle) * radius],
+		id: '000006',
 	},
 ];
-const angle = (Math.PI / projData.length) * 2;
-// console.log(projData.length);
-const radius = 3;
-const offset = 0;
-// console.log(angle);
-const ProjectDataTemp = [];
-projData.map((e, k) => {
-	const pos = 1;
-	e.position = [
-		Math.sin((k + offset) * angle) * radius,
-		pos,
-		Math.cos((k + offset) * angle) * radius,
-	];
-	e.angle = (k + offset) * angle;
-	// console.log(e.angle);
-	e.radius = radius;
-	ProjectDataTemp.push(e);
-});
 
-export const ProjectData = ProjectDataTemp;
+const ProjectDataTemp = [];
+
+export const ProjectData = projData;
