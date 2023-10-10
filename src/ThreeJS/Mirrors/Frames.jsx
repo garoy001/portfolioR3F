@@ -14,39 +14,42 @@ import { easing } from 'maath';
 import { gsap } from 'gsap';
 import { getBreakPoint, getDeviceType } from '/utils';
 import { Frame } from './Frame';
-let Checker = 0;
+// import { checkIntersects } from '../../utils';
+let Checker = 1;
 let counter = 0;
 let stateObj;
 let camera;
+let arrow;
 let currentIntersect;
 let prevIntersect;
-export const Frames = ({
-	q = new THREE.Quaternion(),
-	p = new THREE.Vector3(),
-}) => {
+export const Frames = ({}) => {
 	const images = useMemo(() => {
 		return ProjectData;
 	});
+
 	const timeline = gsap.timeline({ repeat: -1 });
 	let arrowWrapper = null;
 	const breakPoint = getBreakPoint();
 	const deviceType = getDeviceType();
-	const [isClicked, setClicked] = useState(false);
 	const [locked, setLocked] = useState(false);
+	const [locked2, setLocked2] = useState(false);
 	const rotatingRef = useRef();
 	const textRef3d = useRef();
 	const groupRef = useRef();
 	const ref = useRef();
+	const lineRef = useRef();
+	const rayCaster = new THREE.Raycaster();
+	// rayCaster.layers.set(3);
 	const htmlRef = useRef();
-	// const [prevIntersect, setPrevIntersect] = useState();
-	// const [currentIntersect, setCurrentIntersect] = useState();
+	const floorRef = useRef();
 	const tlLeft = gsap.timeline({
 		onStart: () => {
 			setLocked(true);
 		},
 		onComplete: () => {
 			setLocked(false);
-			checkIntersects(stateObj.camera, stateObj.scene);
+			setLocked2(false);
+			checkIntersects(stateObj.camera, stateObj.scene, rayCaster);
 		},
 	});
 	const tlRight = gsap.timeline({
@@ -55,7 +58,8 @@ export const Frames = ({
 		},
 		onComplete: () => {
 			setLocked(false);
-			checkIntersects(stateObj.camera, stateObj.scene);
+			setLocked2(false);
+			checkIntersects(stateObj.camera, stateObj.scene, rayCaster);
 		},
 	});
 	tlLeft.pause();
@@ -80,8 +84,9 @@ export const Frames = ({
 			});
 		}
 	};
-
-	q.identity();
+	const material = new THREE.LineBasicMaterial({
+		color: 0x0000ff,
+	});
 	const renderedImages = useMemo(() => {
 		return (
 			<>
@@ -91,183 +96,141 @@ export const Frames = ({
 			</>
 		);
 	}, []);
+	let geometry;
 	const floorGeometry = useMemo(() => {
-		return new THREE.PlaneGeometry(50.5, 50.5);
+		return new THREE.PlaneGeometry(10.5, 10.5);
 	}, []);
-	const rayCaster = new THREE.Raycaster();
+
+	const { gl, camera, scene } = useThree();
 	const checkIntersects = (camera, scene) => {
-		rayCaster.set(new THREE.Vector3(0, 0, 0), camera.position);
+		setLocked2(true);
+		const tl = gsap.timeline({
+			onStart: () => {
+				setLocked2(true);
+			},
+		});
+		setLocked2(true);
+		const pos = camera.position.y;
+		const rayPos = new THREE.Vector3(0, pos, 0);
+		const rayEndPos = new THREE.Vector3(0, 0, camera.position.z);
+		rayCaster.set(rayPos, rayEndPos);
+		console.log(rayCaster);
 		const intersects = rayCaster.intersectObject(scene);
-		if (intersects[0].object != undefined) {
+		console.log(intersects);
+		if (intersects[0] != undefined) {
 			const interObj = intersects[0].object.children[2];
 			console.log(interObj);
-			prevIntersect = currentIntersect;
-			currentIntersect = interObj.name;
-			console.log('prev');
-			console.log(prevIntersect);
-			console.log('current');
-			console.log(currentIntersect);
-			// console.log(intersects[0].object.children[2]);
-			const htmlSelector = `${currentIntersect}`;
+			if (interObj.name != null) {
+				currentIntersect = interObj.name;
+			}
+
+			if (currentIntersect != prevIntersect && prevIntersect != null) {
+				prevIntersect = currentIntersect;
+			}
+
+			const htmlSelector = `.${currentIntersect}`;
 			const prevHtmlSelector = `${prevIntersect}`;
-			let htmlItem = document.getElementsByClassName(htmlSelector);
-			let prevHtmlItem = document.getElementsByClassName(prevHtmlSelector);
-			htmlItem = htmlItem[0];
-			gsap.fromTo(
-				prevHtmlItem,
-				{ opacity: 1 },
-				{ opacity: 0, duration: 0.25, ease: 'power4' }
-			);
-			gsap.fromTo(
+			console.log(htmlSelector);
+			let htmlItem = document.querySelector(`${htmlSelector}`);
+			console.log(document.querySelector('.html-selector-drei000001'));
+			let prevHtmlItem = document.querySelector(prevHtmlSelector);
+
+			console.log(prevHtmlItem);
+			// console.log(htmlItem);
+			// htmlItem = htmlItem[0];
+			console.log(htmlItem);
+			// console.log(prevHtmlItem);
+			if (prevHtmlItem != null) {
+				gsap.fromTo(
+					prevHtmlItem,
+					{ opacity: 1 },
+					{ opacity: 0, duration: 0.25, ease: 'power4' }
+				);
+			}
+			tl.fromTo(
 				htmlItem,
 				{ opacity: 0 },
 				{ opacity: 1, duration: 0.5, ease: 'power4' }
 			);
-			// console.log(htmlItem.style);
 
-			// console.log(intersects);
-			// console.log(intersects[0].object.children[2]);
+			// console.log('madeit');
 		}
 	};
+
 	useEffect(() => {
-		if (deviceType != 'desktop') {
-			textRef3d.current.scale.set(0.8, 0.8, 0.8);
-			textRef3d.current.position.set(2.9, 2, -0.5);
-		}
-
-		p.set(0, 1.2, 6.25);
-		if (htmlRef.current) {
-			const hand = htmlRef.current;
-
-			timeline.to(hand, { scale: '.8', duration: 0.5, delay: 3 });
-			timeline.to(hand, { scale: '1', duration: 0.5 });
-
-			timeline.play();
-		}
+		Checker = 0;
+		console.log(document.querySelector('.html-selector-drei000001'));
+		const i = document.querySelector('.html-selector-drei000001');
+		gsap.fromTo(
+			i,
+			{ opacity: 0 },
+			{ opacity: 1, duration: 0.5, ease: 'power4' }
+		);
+		checkIntersects(camera, scene);
 	});
 
+	// setClicked(true);
 	useFrame((state, dt) => {
-		arrowWrapper = document.querySelector('.arrow-wrap');
-		// console.log(rayCaster);
-		stateObj = state;
-		// console.log(renderedImages.props.children);
-		if (isClicked) {
-			easing.damp3(state.camera.position, p, 0.4, dt);
-			easing.dampQ(state.camera.quaternion, q, 0.4, dt);
+		const arrowWrap = document.querySelector('.arrow-wrap');
+		// console.log(locked2);
+		// console.log(window.newObj);
 
-			if (state.camera.position.y == 1.2 && Checker === 0) {
-				checkIntersects(state.camera, state.scene);
-				Checker++;
-			}
-			// console.log(intersects);
-			// console.log(rayCaster.intersectObjects(renderedImages.props.children));
-			gsap.to(textRef3d.current.position, {
-				y: -1,
-				duration: 10,
-			});
-			gsap.to(':root', {
-				'--background-color': 'black',
-			});
-
-			if (arrowWrapper) {
-				gsap.to(arrowWrapper, { opacity: 1, duration: 2, delay: 1 });
-			}
+		// console.log(window.newObj);
+		if (window.newObj >= 0.9) {
+			gsap.to(arrowWrap, { opacity: 1, duration: 1 });
 		}
+		if (window.newObj < 0.9) {
+			gsap.to(arrowWrap, { opacity: 0, duration: 1 });
+		}
+		// console.log(state.camera.position);
+		stateObj = state;
 	});
+
 	return (
-		<group ref={ref} position={[0, -1, 0]} name="frames-grp">
-			{deviceType == 'desktop' && !isClicked && (
-				<>
-					<group ref={groupRef} name="rendered-images">
-						{renderedImages}
-					</group>
-				</>
-			)}
-			{deviceType != 'desktop' && !isClicked && (
-				<>
-					<group ref={groupRef} name="rendered-images">
-						{renderedImages}
-					</group>
-				</>
-			)}
-			{isClicked && (
-				<>
-					<Html wrapperClass="canvas-arrows-wrapper" className="canvas-arrows">
-						<div className="arrow-wrap">
-							<div className="arrow-left" onClick={() => rotateLeft()}>
-								<BiLeftArrow />
-							</div>
-							<div className="arrow-right" onClick={() => rotateRight()}>
-								<BiRightArrow />
-							</div>
+		<group ref={ref} position={[0, -2.25, 0]} name="frames-grp">
+			<>
+				<Html wrapperClass="canvas-arrows-wrapper" className="canvas-arrows">
+					<div className="arrow-wrap">
+						<div className="arrow-left" onClick={() => rotateLeft()}>
+							<BiLeftArrow />
 						</div>
-					</Html>
-					<>
-						<group ref={rotatingRef} name="rotating-ref-container">
-							<group ref={groupRef} name="rendered-images">
-								{renderedImages}
-							</group>
+						<div className="arrow-right" onClick={() => rotateRight()}>
+							<BiRightArrow />
+						</div>
+					</div>
+				</Html>
+				<>
+					<group ref={rotatingRef} name="rotating-ref-container">
+						<group ref={groupRef} name="rendered-images">
+							{renderedImages}
 						</group>
-					</>
+					</group>
 				</>
-			)}
+			</>
+
 			<group position={[0, 1.2, 0]}>
-				<mesh rotation={[-Math.PI / 2, 0, 0]} geometry={floorGeometry}>
+				<mesh
+					rotation={[-Math.PI / 2, 0, 0]}
+					geometry={floorGeometry}
+					ref={floorRef}
+				>
 					<MeshReflectorMaterial
 						blur={[300, 100]}
 						resolution={2048}
 						mixBlur={1}
 						mixStrength={80}
 						roughness={1}
-						depthScale={1.2}
+						// depthScale={1.2}
+						depthWrite={false}
+						side={THREE.DoubleSide}
 						minDepthThreshold={0.4}
 						maxDepthThreshold={1.4}
 						color="#050505"
+						// opacity={0}
+						transparent
 						metalness={0.5}
 					/>
 				</mesh>
-			</group>
-			<group
-				position={[3.5, 2, -0.5]}
-				rotation={[Math.PI / 2, Math.PI, 0]}
-				ref={textRef3d}
-			>
-				<Text3D
-					font="/fonts/montserrat.json"
-					fontSize="200"
-					size={1}
-					height={0.02}
-					curveSegments={12}
-					bevelEnabled
-					bevelThickness={0.2}
-					bevelSize={0.05}
-					bevelOffset={0}
-					bevelSegments={5}
-				>
-					PROJECTS
-					<meshStandardMaterial
-						color={new THREE.Color('#fff')}
-						emissive={new THREE.Color('#fff')}
-						emissiveIntensity={2}
-						toneMapped={false}
-					/>
-					{!isClicked && (
-						<Html
-							className="project-hover"
-							wrapperClass="project-hover-wrapper"
-							distanceFactor={20}
-							// center
-							transform
-							position={[3.5, 0, 3]}
-							// ref={htmlRef}
-						>
-							<div className="hover-div" onClick={() => setClicked(true)}></div>
-							<div className="pointer-hand" ref={htmlRef}>
-								<LiaHandPointerSolid />
-							</div>
-						</Html>
-					)}
-				</Text3D>
 			</group>
 		</group>
 	);

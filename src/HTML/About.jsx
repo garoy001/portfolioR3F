@@ -8,20 +8,20 @@ export const About = () => {
 	useEffect(() => {
 		let textFrames = gsap.utils.toArray('.text-wrapper');
 
-		// Set up our scroll trigger
-		// const ST = ScrollTrigger.create({
-		// 	trigger: '.about-anim-container',
-		// 	start: 'top top',
-		// 	end: 'bottom bottom',
-		// 	// onUpdate: getCurrentSection,
-		// 	pin: '.title',
-		// 	pinSpacing: false,
-		// });
 		const ST2 = ScrollTrigger.create({
 			trigger: '.about-anim-container',
+			// start: 'top+=20%',
 			pin: '.left-side',
+			start: 'top top',
+			end: 'bottom-=20% top',
 			markers: true,
+			scrub: true,
 		});
+	});
+	useEffect(() => {
+		const widthL = document.querySelector('.left-side');
+		const widthR = document.querySelector('.right-side');
+		console.log(widthL.style.width);
 	});
 	return (
 		<>
@@ -29,11 +29,13 @@ export const About = () => {
 				<div id="about-section" className="slide section">
 					<div className="about-anim-container">
 						<div className="left-side">
-							<h1 className="title ">About Me</h1>
+							<div className="title-wrapper">
+								<h1 className="title ">About Me</h1>
+							</div>
 						</div>
 						<div className="right-side">
-							<h2 className="sub-title pin-me">Hello World.</h2>
 							<div className="text-anim-box pin-me">
+								<h2 className="sub-title pin-me">Hello World.</h2>
 								<div className="text-wrapper">
 									<div className="text text-1">
 										Beginning with HTML, CSS, and JavaScript, I quickly fell in
