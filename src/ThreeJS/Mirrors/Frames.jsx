@@ -14,6 +14,7 @@ import { easing } from 'maath';
 import { gsap } from 'gsap';
 import { getBreakPoint, getDeviceType } from '/utils';
 import { Frame } from './Frame';
+import { useGLTF } from '@react-three/drei';
 // import { checkIntersects } from '../../utils';
 let Checker = 1;
 let counter = 0;
@@ -26,8 +27,9 @@ export const Frames = ({}) => {
 	const images = useMemo(() => {
 		return ProjectData;
 	});
-
+	const { nodes, materials } = useGLTF('/Models/sphere.glb');
 	const timeline = gsap.timeline({ repeat: -1 });
+	const sphereRef = useRef();
 	let arrowWrapper = null;
 	const breakPoint = getBreakPoint();
 	const deviceType = getDeviceType();
@@ -166,6 +168,7 @@ export const Frames = ({}) => {
 			{ opacity: 0 },
 			{ opacity: 1, duration: 0.5, ease: 'power4' }
 		);
+
 		checkIntersects(camera, scene);
 	});
 
@@ -207,7 +210,16 @@ export const Frames = ({}) => {
 					</group>
 				</>
 			</>
-
+			<mesh
+				castShadow
+				receiveShadow
+				geometry={nodes.Sphere.geometry}
+				material={materials['360']}
+				position={[0, 1.272, 20]}
+				rotation={[0, 0, -Math.PI / 2]}
+				scale={5.369}
+				ref={sphereRef}
+			/>
 			<group position={[0, 1.2, 0]}>
 				<mesh
 					rotation={[-Math.PI / 2, 0, 0]}

@@ -1,7 +1,16 @@
-import { Canvas } from '@react-three/fiber';
-import { Mirrors } from '/ThreeJS/Mirrors/Mirrors.jsx';
-import { Environment, Loader } from '@react-three/drei';
+import { Canvas, extend } from '@react-three/fiber';
+// import { Mirrors } from '/ThreeJS/Mirrors/Mirrors.jsx';
 import { Perf } from 'r3f-perf';
+import {
+	Environment,
+	Loader,
+	OrbitControls,
+	PresentationControls,
+	shaderMaterial,
+	useTexture,
+} from '@react-three/drei';
+import { Backdrop } from '../ThreeJS/Models/Backdrop';
+
 export const CanvasOverlay = () => {
 	return (
 		<>
@@ -17,11 +26,15 @@ export const CanvasOverlay = () => {
 					// gl={(alpha = true)}
 					className="canvas-wrapper"
 				>
-					{/* <Perf position="top-right" /> */}
-					{/* <color attach="background" args={['transparent']} /> */}
+					<Backdrop />
+					{/* <OrbitControls /> */}
+					<Perf position="top-right" />
+					{/* <color attach="background" args={['gray']} /> */}
+					<color attach="background" args={['#191920']} />
+					{/* <Mirrors /> */}
+					{/* <fog attach="fog" args={['#191920', 5, 25]} /> */}
 
-					<Mirrors />
-					<Environment preset="city" />
+					{/* <Environment preset="city" /> */}
 				</Canvas>
 			</div>
 		</>

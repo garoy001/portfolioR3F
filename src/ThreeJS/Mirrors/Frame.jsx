@@ -85,6 +85,7 @@ export const Frame = ({
 			-0.1,
 			Math.cos(angle) * (radius + 4)
 		);
+		
 		groupRef.current.children.forEach((e) => {
 			e.lookAt(vecPos);
 		});
