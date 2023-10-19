@@ -11,6 +11,7 @@ const sizes = {
 	width: window.innerWidth,
 	height: window.innerHeight,
 };
+const cursor = {};
 export const Backdrop = () => {
 	const particleRef = useRef();
 	const groupRef = useRef();
@@ -24,11 +25,10 @@ export const Backdrop = () => {
 	const parameters = {
 		materialColor: '#ffeded',
 	};
-	const cursor = {};
 
 	window.addEventListener('mousemove', (e) => {
-		if (e.clientX && height) cursor.x = (e.clientX / height - 0.5).toFixed(2);
-		if (e.clientY && width) cursor.y = (e.clientY / width - 0.5).toFixed(2);
+		if (e.clientX && height) cursor.x = (e.clientX / height - 0.5).toFixed(3);
+		if (e.clientY && width) cursor.y = (e.clientY / width - 0.5).toFixed(3);
 	});
 
 	const particleGeometry = useMemo(() => {
@@ -61,14 +61,14 @@ export const Backdrop = () => {
 		const parallaxX = cursor.x * 0.5;
 		const parallaxY = -cursor.y * 0.5;
 
-		console.log(state.scene);
-
-		particleRef.current.position.x +=
-			(parallaxX - particleRef.current.position.x) * 5 * dt;
-		particleRef.current.position.y +=
-			(parallaxY - particleRef.current.position.y) * 50 * dt;
-		particleRef.current.rotation.x += dt * 0.002;
-		particleRef.current.rotation.y += dt * 0.002;
+		if (parallaxX && parallaxY) {
+			const posX = particleRef.current.position.x;
+			const posY = particleRef.current.position.y;
+			particleRef.current.position.x += (parallaxX - posX) * 5 * dt;
+			particleRef.current.position.y += (parallaxY - posY) * 5 * dt;
+			particleRef.current.rotation.x += dt * 0.002;
+			particleRef.current.rotation.y += dt * 0.002;
+		}
 	});
 	return (
 		<>

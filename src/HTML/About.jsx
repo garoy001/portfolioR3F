@@ -1,21 +1,97 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect } from 'react';
-
+const sectionTitles = ['About Me', 'Projects', 'Contact Me'];
+const subSectionTitles = ['MERN', 'ThreeJS'];
 export const About = () => {
 	gsap.registerPlugin(ScrollTrigger);
 
 	useEffect(() => {
-		let textFrames = gsap.utils.toArray('.text-wrapper');
+		let sectionsSelector2 = document.querySelectorAll('.project-wrapper-2');
+		let sectionsSelector1 = document.querySelectorAll('.project-wrapper-1');
+		const secArr = [sectionsSelector1, sectionsSelector2];
+		const sections = document.querySelectorAll('.page-section-pinned');
+		const subSections = document.querySelectorAll('.project-sub-section');
+		const secOffset =
+			-secArr[1][0].offsetWidth * (secArr[1].length - 1) * -1 +
+			-secArr[0][0].offsetWidth * (secArr[0].length - 1) * -1;
+		ScrollTrigger.create({
+			trigger: '.pin-scrolling-section',
 
-		const ST2 = ScrollTrigger.create({
-			trigger: '.about-anim-container',
-			// start: 'top+=20%',
-			pin: '.left-side',
+			pin: '.pinned-left-side',
 			start: 'top top',
-			end: 'bottom-=20% top',
-			markers: true,
+			end: `bottom+=${secOffset} top`,
+			// markers: true,
 			scrub: true,
+		});
+
+		const setSectionText = (index) => {
+			gsap.set('.section-title', {
+				innerText: sectionTitles[index],
+			});
+			gsap.set('.section-sub-title', {
+				innerText: '',
+			});
+		};
+		const setSubSectionText = (index) => {
+			gsap.set('.section-sub-title', {
+				innerText: subSectionTitles[index],
+			});
+		};
+		sections.forEach((sec, index) => {
+			ScrollTrigger.create({
+				trigger: sec,
+				// start: 'top center',
+				markers: true,
+				start: () => {
+					if (index == sections.length - 1) {
+						return `top+=${secOffset} center`;
+					} else {
+						return 'top center';
+					}
+				},
+				end: `bottom center`,
+				onEnter: () => {
+					console.log(index);
+
+					setSectionText(index);
+				},
+				onEnterBack: () => {
+					console.log(index);
+					if (index == 2) {
+						setSectionText(index - 1);
+					} else {
+						setSectionText(index);
+					}
+				},
+			});
+		});
+		subSections.forEach((sec, index) => {
+			ScrollTrigger.create({
+				trigger: sec,
+				start: () => {
+					if (index == 0) {
+						return 'top center';
+					} else if (index == 1) {
+						return `+=${
+							-secArr[0][0].offsetWidth * (secArr[index].length - 2) * -1
+						}`;
+					}
+				},
+
+				end: () => {
+					return `+=${
+						-secArr[index][0].offsetWidth * (secArr[index].length - 2) * -1
+					}`;
+				},
+
+				onEnter: () => {
+					setSubSectionText(index);
+				},
+				onEnterBack: () => {
+					setSubSectionText(index);
+				},
+			});
 		});
 	});
 	useEffect(() => {
@@ -25,12 +101,15 @@ export const About = () => {
 	});
 	return (
 		<>
-			<div className="page-section about-section-wrapper">
+			<div className="page-section about-section-wrapper page-section-pinned">
 				<div id="about-section" className="slide section">
-					<div className="about-anim-container">
-						<div className="left-side">
-							<div className="title-wrapper">
-								<h1 className="title ">About Me</h1>
+					<div className="anim-container">
+						<div className="left-side pinned-left-side">
+							<div className="title-wrapper title-wrap-override">
+								<div className="title-holder">
+									<h1 className="title section-title">About Me</h1>
+									<h1 className="sub-title section-sub-title"></h1>
+								</div>
 							</div>
 						</div>
 						<div className="right-side">

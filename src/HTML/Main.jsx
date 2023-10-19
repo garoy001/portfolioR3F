@@ -32,14 +32,17 @@ export const Main = () => {
 	}
 
 	requestAnimationFrame(raf);
-
+	
 	return (
 		<>
 			<Nav />
 			<Intro />
-			<About />
-			<Projects />
-			<Tech />
+			<div className="pin-scrolling-section">
+				<About />
+				<Projects />
+				<Tech />
+			</div>
+
 			<Suspense>
 				<CanvasOverlay />
 			</Suspense>

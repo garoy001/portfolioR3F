@@ -1,0 +1,50 @@
+.title {
+	border-left: 2px solid orange;
+}
+.sub-title {
+	// border-bottom: 2px solid orange;
+	padding-top: 7.5%;
+	font-style: italic;
+	font-size: 4em;
+}
+.text {
+	font-size: 3em;
+}
+.text-wrapper {
+	padding-bottom: 5em;
+	padding-top: 5em;
+}
+// .text-wrapper {
+// 	margin-bottom: 100%;
+// 	// transform: translateY(-100%);
+// }
+.sub-title {
+	top: 10%;
+	// z-index: 4;
+}
+
+.title-wrapper {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	.sub-title {
+		text-align: end;
+		font-style: italic;
+		font-weight: 400;
+	}
+}
+.title {
+	padding-left: 0.5em;
+	font-size: 5em;
+}
+
+.text-anim-box {
+	margin-top: 25%;
+	// z-index: 2;
+	position: relative;
+}
+#about-section {
+	.pin-spacer {
+		min-width: 50%;
+	}
+}

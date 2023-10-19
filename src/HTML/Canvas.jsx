@@ -10,6 +10,7 @@ import {
 	useTexture,
 } from '@react-three/drei';
 import { Backdrop } from '../ThreeJS/Models/Backdrop';
+import { Suspense } from 'react';
 
 export const CanvasOverlay = () => {
 	return (
@@ -26,7 +27,10 @@ export const CanvasOverlay = () => {
 					// gl={(alpha = true)}
 					className="canvas-wrapper"
 				>
-					<Backdrop />
+					<Suspense>
+						<Backdrop />
+					</Suspense>
+
 					{/* <OrbitControls /> */}
 					<Perf position="top-right" />
 					{/* <color attach="background" args={['gray']} /> */}

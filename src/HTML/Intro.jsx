@@ -10,7 +10,7 @@ export const Intro = () => {
 	return (
 		<>
 			<div className="intro-section-wrapper page-section">
-				<div id="intro-section" className="slide section">
+				<div id="intro-section" className="section">
 					<div className="intro-hook-header">
 						<div className="intro-line-1 intro-line">Get </div>
 						<div className="roulette-wrapper">
