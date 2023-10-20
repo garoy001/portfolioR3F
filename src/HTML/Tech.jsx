@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect } from 'react';
+import { ContactForm } from './Components/contact';
 
 export const Tech = () => {
 	gsap.registerPlugin(ScrollTrigger);
@@ -14,7 +15,9 @@ export const Tech = () => {
 							<div className="title-wrapper"></div>
 						</div>
 						<div className="right-side">
-							<div className="text-anim-box pin-me"></div>
+							<div className="contact-form">
+								<ContactForm />
+							</div>
 						</div>
 					</div>
 				</div>

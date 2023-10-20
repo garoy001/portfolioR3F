@@ -33,6 +33,7 @@
 		justify-content: center;
 		.project-right-side-wrapper {
 			height: 50vh;
+			font-size: clamp(10px, 1em, 2em);
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -46,6 +47,7 @@
 		.project-technologies {
 			display: flex;
 			flex-wrap: wrap;
+			font-size: 1rem;
 		}
 		.project-links {
 			display: flex;
@@ -91,4 +93,109 @@
 .project-right-side {
 	width: 30%;
 	padding-right: 5%;
+}
+@media screen and (width < 780px) and (width > 500px) {
+	.projects-wrapper {
+		align-items: flex-end;
+	}
+	.project-wrapper {
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		margin-bottom: 2em;
+		position: relative;
+	}
+	.project-left-side {
+		height: 70%;
+		justify-content: flex-end !important;
+	}
+	.project-right-side {
+		width: 65%;
+		height: 10%;
+	}
+	.project-right-side-wrapper {
+		height: 100% !important;
+		font-size: 20px;
+		width: 100%;
+		align-items: center;
+	}
+	.project-description {
+		width: 100%;
+		text-align: center;
+		padding-bottom: 5%;
+		font-size: 1.25em;
+	}
+	.project-links a {
+		margin-right: 0 !important;
+		margin-bottom: 2rem;
+	}
+	.project-links {
+		position: absolute;
+		flex-direction: column;
+
+		right: 5%;
+		top: 50%;
+	}
+	.project-technologies {
+		// flex-direction: column;
+		// width: 50%;
+		display: none !important;
+	}
+}
+@media screen and (width < 500px) {
+	.projects-wrapper {
+		align-items: flex-end;
+	}
+	.project-wrapper {
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		margin-bottom: 2em;
+		position: relative;
+	}
+	.project-title {
+		font-size: 2rem;
+		margin-bottom: 12.5%;
+		text-align: right;
+	}
+	.project-left-side {
+		height: 70%;
+		width: 90%;
+		padding-right: 0;
+		justify-content: flex-end !important;
+	}
+	.project-right-side {
+		width: 65%;
+		height: 10%;
+	}
+	.project-right-side-wrapper {
+		height: 100% !important;
+		font-size: 20px;
+		width: 100%;
+		align-items: center;
+	}
+	.project-description {
+		width: 100%;
+		text-align: center;
+		padding-bottom: 5%;
+		font-size: 1.25em;
+	}
+	.project-links a {
+		font-size: 3rem;
+		margin-right: 4rem !important;
+		// margin-bottom: 2rem;
+	}
+	.project-links {
+		position: absolute;
+		right: 5%;
+		top: 25%;
+	}
+	.project-image-container {
+		width: 100%;
+	}
+	.project-technologies {
+		// flex-direction: column;
+		// width: 50%;
+		display: none !important;
+	}
 }
