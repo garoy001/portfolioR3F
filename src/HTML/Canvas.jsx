@@ -32,7 +32,7 @@ export const CanvasOverlay = () => {
 					</Suspense>
 
 					{/* <OrbitControls /> */}
-					<Perf position="top-right" />
+					{/* <Perf position="top-right" /> */}
 					{/* <color attach="background" args={['gray']} /> */}
 					<color attach="background" args={['#191920']} />
 					{/* <Mirrors /> */}

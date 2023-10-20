@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { WordSlideIntro } from '/Animations/wordSlideIntro.js';
+
 export const Intro = () => {
 	const nameRef = useRef(null);
 
 	useEffect(() => {
-		WordSlideIntro();
+
 		// IntroAnimation();
 	});
 	return (
