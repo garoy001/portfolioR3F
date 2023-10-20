@@ -3,6 +3,16 @@ import { useEffect, useRef } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export const WordSlideIntro = () => {
 	// gsap.registerPlugin(ScrollTrigger);
+	gsap.from('.nav-wrapper', {
+		y: -100,
+		scrollTrigger: {
+			trigger: 'html',
+			start: 'top+=50px',
+			end: 'top+=100px top',
+			scrub: true,
+			// markers: true,
+		},
+	});
 	const wordGroupOne = document.querySelectorAll('.word-roulette-1');
 	const wordGroupTwo = document.querySelectorAll('.word-roulette-3');
 	const wordGroupThree = document.querySelectorAll('.word-roulette-2');
