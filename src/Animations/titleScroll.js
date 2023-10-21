@@ -69,7 +69,7 @@ export const TitleScroll = () => {
 		ScrollTrigger.create({
 			trigger: sec,
 			// start: 'top center',
-			// markers: true,
+			markers: true,
 			// start: 'top top',
 
 			start: () => {
@@ -77,7 +77,7 @@ export const TitleScroll = () => {
 					if (window.innerWidth < 500) {
 						return `top+=${secOffset / 1.45} center`;
 					} else if (window.innerWidth < 780) {
-						return `top+=${secOffset / 1.85} center`;
+						return `top+=${secOffset / 1} center`;
 					} else if (window.innerWidth < 1400) {
 						return `top+=${secOffset / 3} center`;
 					} else {

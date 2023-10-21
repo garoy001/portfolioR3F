@@ -46,7 +46,7 @@ export const ContactForm = () => {
 	return (
 		<form onSubmit={handleSubmit}>
 			{' '}
-			<div>
+			<div className="form-name-field form-input-field">
 				<label>Name:</label>
 				<input
 					type="text"
@@ -56,7 +56,7 @@ export const ContactForm = () => {
 					required
 				/>
 			</div>
-			<div>
+			<div className="form-email-field form-input-field">
 				<label>Email:</label>
 				<input
 					type="email"
@@ -66,7 +66,7 @@ export const ContactForm = () => {
 					required
 				/>
 			</div>
-			<div>
+			<div className="form-message-field">
 				<label>Message:</label>
 				<textarea
 					name="message"
@@ -75,7 +75,7 @@ export const ContactForm = () => {
 					required
 				></textarea>
 			</div>
-			<div>
+			<div className="form-submit-button">
 				<button type="submit" disabled={disabled}>
 					Submit
 				</button>
