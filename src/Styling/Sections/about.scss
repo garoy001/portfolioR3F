@@ -30,6 +30,9 @@
 	height: 100vh;
 	display: flex;
 	align-items: center;
+	* {
+		user-select: none;
+	}
 	.sub-title {
 		text-align: end;
 		font-style: italic;
