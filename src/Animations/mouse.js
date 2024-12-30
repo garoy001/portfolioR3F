@@ -7,7 +7,7 @@ export const MouseControl = () => {
 		mouse.style.left = e.pageX + 'px';
 	}
 	function activeCursor(e) {
-		console.log(e.target);
+		// console.log(e.target);
 		const item = e.target;
 		const tween = gsap.to(mouse, { rotation: 360, repeat: -1, delay: 0 });
 		document.querySelectorAll('a').forEach((e) => {

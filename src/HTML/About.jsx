@@ -17,31 +17,39 @@ export const About = () => {
 								<h2 className="sub-title pin-me text-reveal">Hello World.</h2>
 								<div className="text-wrapper text-reveal">
 									<div className="text text-1">
-										Beginning with HTML, CSS, and JavaScript, I quickly fell in
-										love with programming as a child.
+										In 2020 I began my journey into programming with Python and
+										found that it made great use of my love of computers and my
+										knack for <span>problem-solving</span>. Since then I've gone
+										on to learn C#, Javascript, and many more frameworks and
+										libraries.
 									</div>
 								</div>
 								<div className="text-wrapper text-reveal">
 									{' '}
 									<div className="text text-2">
-										As time went on I learned and worked with Python, C#, Java,
-										and various libraries and frameworks constantly seeking to
-										improve my knowledge and skills as not just a developer, but
-										a problem-solver.
+										My long-term goal is to continue
+										<span> learning</span> and <span>mastering</span> both the
+										technologies I know and those I'll come to know to find new
+										innovative ways to provide software-based solutions. My
+										immediate goal is to learn new ways to <span>design</span>{' '}
+										and integrate full-stack applications to build my skills in
+										full-stack software engineering.
 									</div>
 								</div>
 								<div className="text-wrapper text-reveal">
 									{' '}
 									<div className="text text-3">
-										Today, as a creative developer, I believe that unique
-										web-based interactions are the best way to engage with
-										users, and can provide unique solutions to clients.
+										My current focus is building <span>intuitive</span> websites
+										with elegant
+										<span> responsiveness</span> using the most current
+										frameworks and technologies. Outside of my coding fanaticism
+										I'm a huge reader and gamer.
 									</div>
 								</div>
 								<div className="text-wrapper text-reveal">
 									<div className="text text-4">
-										Tomorrow, I hope to have learned something new, to grow as a
-										developer, to solve a problem.
+										{/* Tomorrow, I hope to have learned something new, to grow as a
+										developer, to solve a problem. */}
 									</div>
 								</div>
 							</div>

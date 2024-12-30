@@ -3,7 +3,7 @@ import { Intro } from './Intro';
 import { Nav } from './Nav';
 import { WordSlideIntro } from '/Animations/wordSlideIntro.js';
 import { TitleScroll } from '../Animations/titleScroll';
-import { HorizontalScroll } from '../Animations/horizontalScroll';
+
 import Lenis from '@studio-freight/lenis';
 
 import { About } from './About';
@@ -27,10 +27,10 @@ export const Main = () => {
 	useEffect(() => {
 		WordSlideIntro();
 		TitleScroll();
-		HorizontalScroll(lenis);
+
 		AboutScroll();
 		MouseControl();
-		
+
 		// window.addEventListener('mousemove', cursor);
 		// window.addEventListener('mouseover', activeCursor);
 		window.newObj = 0;
