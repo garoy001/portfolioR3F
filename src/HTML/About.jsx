@@ -20,7 +20,7 @@ export const About = () => {
 										In 2020 I began my journey into programming with Python and
 										found that it made great use of my love of computers and my
 										knack for <span>problem-solving</span>. Since then I've gone
-										on to learn C#, Javascript, and many more frameworks and
+										on to learn C#, Javascript, and many more frameworks, languages and
 										libraries.
 									</div>
 								</div>
