@@ -1,0 +1,85 @@
+#link-section {
+	.right-side {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		// width: 100%;
+		height: 100vh;
+	}
+	.link-container {
+		height: 50%;
+		width: 100%;
+		padding: 20%;
+		padding-left: 0%;
+		padding-right: 0%;
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
+		grid-template-areas:
+			'link1 link2'
+			'link3 link3';
+		.link-1 {
+			grid-area: link1;
+		}
+		.link-2 {
+			grid-area: link2;
+		}
+		.link-3 {
+			grid-area: link3;
+		}
+	}
+	.link {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		--s: 50px; /* the size on the corner */
+		--t: 5px; /* the thickness of the border */
+		--g: 15px; /* the gap between the border and image */
+
+		padding: calc(var(--g) + var(--t));
+		outline: var(--t) solid
+			// linear-gradient(to right bottom, orange 0%, white 100%); /* the color here */
+			white;
+		// border-image: linear-gradient(105deg, orange, white 60%);
+		outline-offset: calc(-1 * var(--t));
+		mask: conic-gradient(at var(--s) var(--s), #0000 75%, #000 0) 0 0 /
+				calc(100% - var(--s)) calc(100% - var(--s)),
+			linear-gradient(#000 0 0) content-box;
+		transition: 0.4s;
+		&:hover {
+			outline-offset: calc(var(--g) / -1);
+			.link-wrapper {
+				background-color: rgba(0, 0, 0, 0.5);
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.link-wrapper {
+		font-size: 2rem;
+		text-shadow: 2px 2px 5px black;
+		display: flex;
+		width: 50%;
+		height: 50%;
+		justify-content: center;
+		align-items: center;
+		transition: 0.4s;
+		.link-name {
+			position: absolute;
+			// visibility: hidden;
+		}
+		.link-icon {
+			width: 100px;
+			height: 100px;
+			// visibility: hidden;
+			opacity: 0;
+		}
+		.link-icon > img,
+		svg {
+			position: absolute;
+			height: inherit;
+			width: inherit;
+		}
+	}
+}

@@ -33,10 +33,10 @@ export const jqueryIco =
 export const projectObj = [
 	{
 		name: 'My Portfolio',
-		img: '',
+		img: 'https://i.ibb.co/KN6VksH/portfolioimg.png',
 		links: {
 			github: {
-				frontEnd: 'https://github.com/garoy001/website-frontend',
+				frontEnd: 'https://github.com/garoy001/portfolioR3F',
 				backEnd: '',
 			},
 			deployed: 'https://dev.gabrielroyce.com',
@@ -80,19 +80,27 @@ export const projectObj = [
 		},
 	},
 	{
-		name: 'CETAMD',
-		img: 'https://i.ibb.co/GR0mMT3/Capturecetam.png',
+		name: 'Weather Visualizer',
+		img: 'https://i.ibb.co/jJRQKVC/weathervisimg.png',
 		links: {
 			github: {
-				frontEnd: 'https://github.com/garoy001/CETAMFront',
+				frontEnd: 'https://github.com/garoy001/Weather-Visualizer',
 				backEnd: '',
 			},
-			deployed: 'https://spiffy-blini-76b969.netlify.app/',
+			deployed: 'https://weathervis.netlify.app/',
 		},
 		tech: [jsIco, cssIco, htmlIco, reactIco],
-		dependencies: ['react', 'react-router-dom', 'MongoDB', 'Express'],
+		dependencies: [
+			'react',
+			'react-router-dom',
+			'ThreeJS',
+			'GLSL',
+			'GSAP',
+			'Sass',
+			'R3F',
+		],
 		description: {
-			short: 'An Event and Venue Tracking App built in a team of 4',
+			short: 'A weather visualization application using 3d graphics in browser',
 			long: '',
 		},
 	},
