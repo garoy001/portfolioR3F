@@ -49,6 +49,7 @@
 		transition: 0.4s;
 		&:hover {
 			outline-offset: calc(var(--g) / -1);
+			cursor: pointer;
 			.link-wrapper {
 				background-color: rgba(0, 0, 0, 0.5);
 				width: 100%;
@@ -68,6 +69,8 @@
 		.link-name {
 			position: absolute;
 			// visibility: hidden;
+			text-decoration: none;
+			color: white;
 		}
 		.link-icon {
 			width: 100px;

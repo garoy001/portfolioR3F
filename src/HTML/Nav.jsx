@@ -5,13 +5,16 @@ export const Nav = () => {
 				<div className="self-icon"></div>
 				<div className="nav-links">
 					<div className="nav-link-wrapper nav-link-0">
-						<a>About Me</a>
+						<a href="#about-section">About Me</a>
 					</div>
 					<div className="nav-link-wrapper nav-link-1">
-						<a>Projects</a>
+						<a href="#project-section">Projects</a>
 					</div>
 					<div className="nav-link-wrapper nav-link-2">
-						<a>Contact Me</a>
+						<a href="#link-section">Learn More</a>
+					</div>
+					<div className="nav-link-wrapper nav-link-3">
+						<a href="#tech-section">Contact Me</a>
 					</div>
 				</div>
 				<div className="mobile-nav">

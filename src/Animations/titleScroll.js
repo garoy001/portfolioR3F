@@ -64,10 +64,10 @@ export const TitleScroll = () => {
 		ScrollTrigger.create({
 			trigger: sec,
 			// start: 'top center',
-			markers: true,
+			// markers: true,
 			// start: 'top top',
 
-			start: 'top-=20% top',
+			start: 'top-=30% top',
 			end: 'bottom center',
 			onEnter: () => {
 				console.log(index);

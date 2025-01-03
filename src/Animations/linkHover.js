@@ -80,16 +80,16 @@ export const LinkHover = () => {
 		e.addEventListener('mouseenter', enterLink);
 		e.addEventListener('mouseleave', leaveLink);
 	});
-	document
-		.querySelector('.link-container')
-		.addEventListener('mouseleave', () => {
-			for (let ico of linkIcons) {
-				// console.log(ico == linkIcon);
-				// console.log(linkIcon);
-				// console.log(ico);
-				// if (ico != linkIcon) {
-				gsap.to(ico, { opacity: 0, duration: 0.5, ease: 'power4' });
-				// }
-			}
-		});
+	// document
+	// 	.querySelector('.link-container')
+	// 	.addEventListener('mouseleave', () => {
+	// 		for (let ico of linkIcons) {
+	// 			// console.log(ico == linkIcon);
+	// 			// console.log(linkIcon);
+	// 			// console.log(ico);
+	// 			// if (ico != linkIcon) {
+	// 			gsap.to(ico, { opacity: 0, duration: 0.5, ease: 'power4' });
+	// 			// }
+	// 		}
+	// 	});
 };
