@@ -20,6 +20,7 @@ export const ContactForm = () => {
 			return;
 		}
 		// Use EmailJS to send the email
+		setDisabled(true);
 		window.emailjs
 			.send(
 				'service_w1a0u4k', // your service ID
@@ -35,7 +36,7 @@ export const ContactForm = () => {
 					message: '',
 				});
 				// Disable form submission for 10 seconds
-				setDisabled(true);
+
 				setTimeout(() => setDisabled(false), 10000);
 			})
 			.catch((error) => {
@@ -79,7 +80,14 @@ export const ContactForm = () => {
 				<button type="submit" disabled={disabled}>
 					Submit
 				</button>
-				{disabled && <p>Please wait 10 seconds before sending again.</p>}
+				{/* <p className="warning-message">
+					Please wait 10 seconds before sending again.
+				</p> */}
+				{disabled && (
+					<p className="warning-message">
+						Please wait 10 seconds before sending again.
+					</p>
+				)}
 			</div>
 		</form>
 	);

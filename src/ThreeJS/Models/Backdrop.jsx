@@ -56,11 +56,25 @@ export const Backdrop = () => {
 		transparent: true,
 		alphaMap: particleTexture,
 	});
-
+	let links = document.querySelectorAll('.link');
 	useFrame((state, dt) => {
 		const parallaxX = cursor.x * 0.5;
 		const parallaxY = -cursor.y * 0.5;
+		for (let link of links) {
+			// console.log(ico == linkIcon);
+			// console.log(linkIcon);
+			// console.log(ico);
+			// if (ico != linkIcon) {
+			// console.log(ico);
 
+			console.log(link.matches('.link:hover'));
+			const ico = link.childNodes[0].childNodes[1];
+			if (ico.style.opacity != 0 && !link.matches('.link:hover')) {
+				gsap.to(ico, { opacity: 0, duration: 0.2 });
+			}
+
+			// }
+		}
 		if (parallaxX && parallaxY) {
 			const posX = particleRef.current.position.x;
 			const posY = particleRef.current.position.y;
