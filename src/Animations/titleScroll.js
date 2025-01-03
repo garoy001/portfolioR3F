@@ -9,7 +9,7 @@ export const TitleScroll = () => {
 	const sections = document.querySelectorAll('.page-section-pinned');
 	const subSections = document.querySelectorAll('.project-sub-section');
 
-	const sectionTitles = ['About Me', 'Projects', 'Contact Me'];
+	const sectionTitles = ['About Me', 'Projects', 'Learn More', 'Contact Me'];
 	// const subSectionTitles = ['MERN', 'ThreeJS'];
 	const secArr = [sectionsSelector1, sectionsSelector2];
 	// const secOffset = secArr[1][0].offsetWidth * (secArr[1].length - 1);

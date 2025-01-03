@@ -15,6 +15,8 @@ import { Tech } from './Tech';
 import { Projects } from './Projects';
 import { AboutScroll } from '../Animations/aboutScroll';
 import { MouseControl } from '../Animations/mouse';
+import { LinkSection } from './Links';
+import { LinkHover } from '../Animations/linkHover';
 export const Main = () => {
 	const lenis = new Lenis({
 		smoothWheel: true,
@@ -30,7 +32,7 @@ export const Main = () => {
 
 		AboutScroll();
 		MouseControl();
-
+		LinkHover();
 		// window.addEventListener('mousemove', cursor);
 		// window.addEventListener('mouseover', activeCursor);
 		window.newObj = 0;
@@ -61,6 +63,7 @@ export const Main = () => {
 			<div className="pin-scrolling-section">
 				<About />
 				<Projects />
+				<LinkSection />
 				<Tech />
 			</div>
 
